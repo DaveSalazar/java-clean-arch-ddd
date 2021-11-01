@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5454:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: application
+      POSTGRES_USER: application
+      POSTGRES_PASSWORD: application
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: application
+      DB_USER: application
+      DB_SCHEMA: public
+      DB_PASSWORD: application
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 8091:8080
+    depends_on:
+      - postgres
+  rabbitmq:
+    image: 'rabbitmq:3.7-management'
+    restart: unless-stopped
+    ports:
+      - 5630:5672
+      - 8090:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=application
+      - RABBITMQ_DEFAULT_PASS=application
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: 'pined'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    command: mysqld --default-authentication-plugin=mysql_native_password --skip-mysqlx
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./mysql:/var/lib/mysql

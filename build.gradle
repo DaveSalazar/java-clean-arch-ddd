@@ -1,0 +1,88 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+version '1.0-SNAPSHOT'
+
+apply plugin: 'application'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    sourceCompatibility = 11
+    targetCompatibility = 11
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.keycloak.bom:keycloak-adapter-bom:12.0.1"
+        }
+    }
+    dependencies {
+
+        implementation 'org.reflections:reflections:0.9.12'
+
+        compile group: 'org.postgresql', name: 'postgresql', version: '42.2.14'
+        compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+        compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+        implementation 'org.apache.commons:commons-dbcp2:2.8.0'
+
+        implementation 'org.hibernate:hibernate-core:5.4.9.Final'
+        implementation 'org.springframework:spring-orm:5.2.2.RELEASE'
+
+        implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
+        implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '14.0.0'
+        implementation 'org.keycloak:keycloak-spring-boot-starter'
+
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-resource-server
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-resource-server', version: '2.5.4'
+
+        implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        testImplementation 'org.springframework.security:spring-security-test'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+subprojects {
+    group = "app.application.administration.${rootProject.name}"
+
+    sourceSets {
+        main {
+            java { srcDirs = ['main'] }
+            resources { srcDirs = ['main/resources'] }
+        }
+
+        test {
+            java { srcDirs = ['test'] }
+            resources { srcDirs = ['test/resources'] }
+        }
+    }
+
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
+}

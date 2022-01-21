@@ -1,8 +1,8 @@
 server:
   port: 8080
-logging:
-  level:
-    org:
-      keycloak: DEBUG
-      springframework:
-        security: DEBUG
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8091/auth/realms/Administration

@@ -9,8 +9,6 @@ import com.application.administration.core.shared.domain.bus.query.QueryHandlerE
 import com.application.administration.web.common.ApiController;
 import com.application.administration.web.common.Constants;
 import com.application.administration.web.common.Utils;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +34,6 @@ public final class SettingsGetController extends ApiController {
     @GetMapping(Constants.PREFIX + "/settings")
     public List<Map<String, Serializable>> handle(@RequestParam Map<String, Serializable> params, Principal principal)
             throws QueryHandlerExecutionError {
-        KeycloakAuthenticationToken keycloakAuthenticationToken = (KeycloakAuthenticationToken) principal;
-        AccessToken accessToken = keycloakAuthenticationToken.getAccount().getKeycloakSecurityContext().getToken();
-
         SettingsResponse response = ask(
                 new SettingsByCriteriaQuery(
                         Utils.parseFilters(params),

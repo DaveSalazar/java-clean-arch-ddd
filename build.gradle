@@ -7,6 +7,7 @@ plugins {
 version '1.0-SNAPSHOT'
 
 apply plugin: 'application'
+mainClassName = 'com.application.administration.web.Application'
 
 allprojects {
     apply plugin: 'java'
@@ -21,41 +22,36 @@ allprojects {
         maven { url 'https://repo.spring.io/milestone' }
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom "org.keycloak.bom:keycloak-adapter-bom:12.0.1"
-        }
-    }
     dependencies {
 
-        implementation 'org.reflections:reflections:0.9.12'
+        implementation 'org.reflections:reflections:0.10.2'
 
         compile group: 'org.postgresql', name: 'postgresql', version: '42.2.14'
-        compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-        compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+        implementation 'io.github.cdimascio:dotenv-java:2.2.3'
 
+        implementation 'software.amazon.awssdk:sns:2.17.112'
+        implementation 'software.amazon.awssdk:sqs:2.17.112'
+        implementation 'org.springframework.boot:spring-boot-starter-amqp:2.6.2'
         implementation 'org.apache.commons:commons-dbcp2:2.8.0'
 
-        implementation 'org.hibernate:hibernate-core:5.4.9.Final'
-        implementation 'org.springframework:spring-orm:5.2.2.RELEASE'
+        implementation 'org.hibernate:hibernate-core:5.6.3.Final'
+        implementation 'org.springframework:spring-orm:5.3.15'
 
         implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
-        implementation group: 'org.keycloak', name: 'keycloak-admin-client', version: '14.0.0'
-        implementation 'org.keycloak:keycloak-spring-boot-starter'
-
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-resource-server
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-resource-server', version: '2.5.4'
 
-        implementation 'org.springframework.boot:spring-boot-starter-amqp'
+        implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.10.2'
+        implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.10.2'
 
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        // dependencies for geo search in elasticsearch
+        implementation group: 'com.spatial4j', name: 'spatial4j', version: '0.5'
+        implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.2'
 
-        implementation 'org.springframework.boot:spring-boot-starter-security'
-        testImplementation 'org.springframework.security:spring-security-test'
+        implementation 'org.springframework.boot:spring-boot-starter-web:2.6.2'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.2'
 
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     }
 
     test {

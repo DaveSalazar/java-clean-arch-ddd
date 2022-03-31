@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
-@Primary
 @Service
 public class AWSSNSEventBus implements EventBus {
 

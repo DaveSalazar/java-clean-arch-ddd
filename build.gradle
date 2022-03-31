@@ -4,10 +4,7 @@ plugins {
     id 'java'
 }
 
-version '1.0-SNAPSHOT'
-
 apply plugin: 'application'
-mainClassName = 'com.application.administration.web.Application'
 
 allprojects {
     apply plugin: 'java'
@@ -26,16 +23,16 @@ allprojects {
 
         implementation 'org.reflections:reflections:0.10.2'
 
-        compile group: 'org.postgresql', name: 'postgresql', version: '42.2.14'
+        implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
         implementation 'io.github.cdimascio:dotenv-java:2.2.3'
 
-        implementation 'software.amazon.awssdk:sns:2.17.112'
-        implementation 'software.amazon.awssdk:sqs:2.17.112'
-        implementation 'org.springframework.boot:spring-boot-starter-amqp:2.6.2'
-        implementation 'org.apache.commons:commons-dbcp2:2.8.0'
+        implementation 'software.amazon.awssdk:sns:2.17.155'
+        implementation 'software.amazon.awssdk:sqs:2.17.155'
+        implementation 'org.springframework.boot:spring-boot-starter-amqp:2.6.5'
+        implementation 'org.apache.commons:commons-dbcp2:2.9.0'
 
-        implementation 'org.hibernate:hibernate-core:5.6.3.Final'
-        implementation 'org.springframework:spring-orm:5.3.15'
+        implementation 'org.hibernate:hibernate-core:5.6.7.Final'
+        implementation 'org.springframework:spring-orm:5.3.17'
 
         implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-resource-server', version: '2.5.4'
@@ -47,8 +44,8 @@ allprojects {
         implementation group: 'com.spatial4j', name: 'spatial4j', version: '0.5'
         implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.2'
 
-        implementation 'org.springframework.boot:spring-boot-starter-web:2.6.2'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.2'
+        implementation 'org.springframework.boot:spring-boot-starter-web:2.6.5'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.5'
 
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
@@ -59,8 +56,10 @@ allprojects {
     }
 }
 
+mainClassName = 'com.application.administration.web.Application'
+
 subprojects {
-    group = "app.application.administration.${rootProject.name}"
+    group = "app.application.administration.core"
 
     sourceSets {
         main {
@@ -81,4 +80,24 @@ subprojects {
     jar {
         enabled = true
     }
+}
+
+
+sourceSets {
+    main {
+        java { srcDirs = ['web/main'] }
+        resources { srcDirs = ['web/main/resources'] }
+    }
+
+    test {
+        java { srcDirs = ['web/test'] }
+        resources { srcDirs = ['web/test/resources'] }
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.5'
+    implementation project(":core")
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.5'
+
 }

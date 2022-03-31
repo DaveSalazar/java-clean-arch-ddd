@@ -9,7 +9,8 @@ public enum FilterOperator {
     LE("<="),
     CONTAINS("CONTAINS"),
     NOT_CONTAINS("NOT_CONTAINS"),
-    BETWEEN("BETWEEN");
+    BETWEEN("BETWEEN"),
+    GEO_DISTANCE("GEO_DISTANCE");
 
     private final String operator;
 
@@ -28,6 +29,7 @@ public enum FilterOperator {
             case "CONTAINS": return FilterOperator.CONTAINS;
             case "NOT_CONTAINS": return FilterOperator.NOT_CONTAINS;
             case "BETWEEN": return FilterOperator.BETWEEN;
+            case "GEO_DISTANCE": return FilterOperator.GEO_DISTANCE;
             default: return null;
         }
     }

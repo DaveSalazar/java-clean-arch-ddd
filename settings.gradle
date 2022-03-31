@@ -1,4 +1,4 @@
-rootProject.name = 'administration'
+rootProject.name = 'administration-api'
 
 include ':web'
 project(':web').projectDir = new File('web')

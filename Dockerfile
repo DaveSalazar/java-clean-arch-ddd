@@ -8,3 +8,4 @@ COPY --from=build /home/gradle/src/build/libs/administration-api.jar /app/admini
 RUN mkdir -p /app/apps/main/resources
 COPY ./core /app/core
 WORKDIR /app
+ENTRYPOINT ["java", "-jar", "administration-api.jar" ]

@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.application.administration.core.setting.domain.AdministrationSetting" table="institution_settings">
+    <class name="com.application.administration.core.setting.domain.AdministrationSetting" table="settings">
         <composite-id name="id" class="com.application.administration.core.shared.domain.identifiers.AdministrationSettingId" access="field">
             <key-property column="id" name="value" length="36" access="field" />
         </composite-id>
